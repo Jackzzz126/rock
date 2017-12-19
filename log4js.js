@@ -7,16 +7,16 @@ function createLog(logName) {
 
 	log.debug = function(){
 		this._logger.debug(util.format.apply(null, arguments));
-	}
+	};
 	log.info = function(){
 		this._logger.info(util.format.apply(null, arguments));
-	}
+	};
 	log.warn = function(){
 		this._logger.warn(util.format.apply(null, arguments));
-	}
+	};
 	log.error = function(){
 		this._logger.error(util.format.apply(null, arguments));
-	}
+	};
 
 	return log;
 }

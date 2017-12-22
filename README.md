@@ -3,7 +3,7 @@ node.js server lib
 
 #wsServer
 ```javascript
-function onConn(socket) {
+function onConn(socket, req) {
 	var addressStr = socket._socket.remoteAddress;
 	addressStr = addressStr.substr(addressStr.lastIndexOf(":") + 1);
 	gLog.info("Client connected: " + addressStr);

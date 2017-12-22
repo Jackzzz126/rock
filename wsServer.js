@@ -3,9 +3,9 @@ var WebSocketServer = require('ws').Server;
 function run(port, onConn) {
 	var wss = new WebSocketServer({port: port});
 
-	wss.on('connection', function(socket) {
+	wss.on('connection', function(socket, req) {
 		if(onConn) {
-			onConn(socket);
+			onConn(socket, req);
 		}
 	});
 }

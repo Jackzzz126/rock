@@ -1,8 +1,19 @@
-var http = require("http");
+const http = require("http");
+const https = require("https");
+const fs = require('fs');
 
-function run(port, onRequest)
+function run(port, onRequest, certFilePath, keyFilePath)
 {
-	http.createServer(onRequest).listen(port);
+	if(certFilePath && keyFilePath) {
+		const options = {
+			key: fs.readFileSync(keyFilePath),
+			cert: fs.readFileSync(certFilePath)
+		};
+
+		https.createServer(options, onRequest).listen(port);
+	} else {
+		http.createServer(onRequest).listen(port);
+	}
 }
 
 exports.run = run;

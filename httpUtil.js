@@ -1,4 +1,5 @@
 var http = require("http");
+var https = require("https");
 
 function response(response, packId, res)
 {
@@ -35,7 +36,7 @@ function responseStr(response, str)
 	response.end();
 }
 
-function httpRequest(options, data, func)
+function httpRequest(options, data, func, useHttps)
 {
 	var dataBuff = null;
 	if(typeof data === "string")
@@ -60,7 +61,13 @@ function httpRequest(options, data, func)
 	}
 	var url = options.host + ":" + options.port + options.path;
 
-	var req = http.request(options, onResponse);
+	let req = null;
+	if(!useHttps) {
+		req = http.request(options, onResponse);
+	} else {
+		req = https.request(options, onResponse);
+
+	}
 	if(data !== null)
 	{
 		req.write(dataBuff);

@@ -17,7 +17,7 @@ function run(port, onConn, cerFilePath, keyFilePath) {
 
 		wss = new ws.Server({server: server});
 	} else {
-		wss = new ws.Serve({port: port});
+		wss = new ws.Server({port: port});
 	}
 	wss.on('connection', function(socket, req) {
 		if(onConn) {

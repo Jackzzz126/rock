@@ -2,5 +2,4 @@
 node.js server lib
 
 # usage
-```jav
-see demo dir
+see rock-demo project

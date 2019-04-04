@@ -121,7 +121,7 @@ function sendOnce(ip, port, packId, dataBuff, cbFunc)
 	}
 	function onError(err)
 	{
-		socket.close();
+		socket.end();
 		cbFunc(err, null, null);
 	}
 
@@ -157,7 +157,7 @@ function sendOnce(ip, port, packId, dataBuff, cbFunc)
 			return;
 		}
 
-		socket.close();
+		socket.end();
 		var recvBuff = Buffer.concat(dataPacksRecved);
 		cbFunc(null, packId, recvBuff.slice(HEAD_LENGTH, packLen + HEAD_LENGTH));
 	}
@@ -275,7 +275,7 @@ function send(conn, packId, dataBuff)
 	}
 	function onError(err)
 	{
-		conn.socket.close();
+		conn.socket.end();
 		conn.cbFunc(err);
 	}
 	function onClose(err)

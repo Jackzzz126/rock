@@ -1,5 +1,5 @@
 exports.comm = require('./comm');
-exports.datetime = require('./datetime');
+exports.time = require('./time');
 exports.log4js = require('./log4js');
 
 exports.wsServer = require('./wsServer');

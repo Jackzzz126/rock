@@ -42,12 +42,12 @@ function getRandStr(len)
 	var chars = "`~=+-_/?;:!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqretuvwxyz0123456789";
 	var ret = '';
 	for(var i = 0; i < len; i++) {
-		ret += chars[getRandNum(82)];
+		ret += chars[randNum(82)];
 	}
 	return ret;
 }
 
-function getRandNum(maxNum)//return range:[0, maxNum -1 ]
+function randNum(maxNum)//return range:[0, maxNum -1 ]
 {
 	return Math.floor(Math.random() * maxNum);
 }
@@ -56,11 +56,11 @@ function getCharId()
 {
        var charId = "";
 
-       var firstDigit = getRandNum(9) + 1;
+       var firstDigit = randNum(9) + 1;
        charId += firstDigit;
        for(var i = 1; i < 9; i++)
        {
-               var otherDigit = getRandNum(10);
+               var otherDigit = randNum(10);
                charId += otherDigit;
        }
 
@@ -101,7 +101,7 @@ function drawOneFromAll(probs)
 		allProbs += probs[i];
 	}
 
-	var randNum = getRandNum(allProbs);
+	var randNum = randNum(allProbs);
 
 	var probSum = 0;
 	for(i in probs)
@@ -266,7 +266,7 @@ exports.getNewToken = getNewToken;
 //des: create a random num.
 //in: range max
 //ret: random num , >=0 and < max
-exports.getRandNum = getRandNum;
+exports.randNum = randNum;
 //des: draw an random obj by given probilities.
 //in: array of probilities.
 //ret: index drawn.

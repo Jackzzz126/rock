@@ -167,6 +167,10 @@ function getDays(timeStamp)
 	return Math.floor(timeStamp / (60 * 60 * 24));
 }
 
+function curTimeMs() {
+	return (new Date()).getTime();
+}
+
 //des: trans date obj to str format.(can't handle DST)
 //in: timeStamp
 //ret: date in str format, such as "2015-08-05 23:42:05"
@@ -232,3 +236,4 @@ exports.isSameYear = isSameYear;
 //ret: days num from 1970-01-01 00:00:00
 exports.getDays = getDays;
 
+exports.curTimeMs = curTimeMs;

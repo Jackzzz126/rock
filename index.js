@@ -1,7 +1,6 @@
 exports.comm = require('./comm');
 exports.time = require('./time');
 exports.crypto = require('./crypto');
-exports.log4js = require('./log4js');
 
 exports.wsServer = require('./wsServer');
 

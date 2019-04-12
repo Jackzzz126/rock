@@ -1,5 +1,6 @@
 var http = require("http");
 var https = require("https");
+const querystring = require('querystring');
 
 function response(response, packId, res)
 {
@@ -22,87 +23,83 @@ function response(response, packId, res)
 	response.end();
 }
 
-function responseStr(response, str)
+//opts
+//host, port=80, path, method = post; useHttps = false
+function httpRequest(opts, data, func)
 {
-	if(response.finished)
-	{
-		return;
+	if(!opts.headers) {
+		opts.headers = {};
 	}
-	response.writeHead(200, {
-		'Content-Length': (new Buffer(str)).length,
-		'Content-Type': 'text/plain'
-	});
-	response.write(str);
-	response.end();
-}
+	if(!opts.port) {
+		opts.port = 80;
+	}
+	if(!opts.method) {
+		opts.method = 'POST';
+	}
 
-function httpRequest(options, data, func, useHttps)
-{
 	var dataBuff = null;
-	if(typeof data === "string")
-	{
+	if(typeof data === "string") {
 		dataBuff = new Buffer(data, "utf8");
-	}
-	else
-	{
+	} else if(Buffer.isBuffer(data)){
 		dataBuff = data;
+	} else {
+		dataBuff = new Buffer(JSON.stringify(data), "utf8");
 	}
 
-	if(!options.headers) {
-		options.headers = {};
+	if(data !== null) {
+		opts.headers["Content-Length"] = dataBuff.length;
+	} else {
+		opts.headers["Content-Length"] = 0;
 	}
-	if(data !== null)
-	{
-		options.headers["Content-Length"] = dataBuff.length;
+
+	let path = opts.path;
+	if(opts.method.toUpperCase() === "GET" && dataBuff !== null) {
+		path += "?";
+		path += querystring.stringify(JSON.parse(dataBuff));
 	}
-	else
-	{
-		options.headers["Content-Length"] = 0;
-	}
-	var url = options.host + ":" + options.port + options.path;
 
 	let req = null;
-	if(!useHttps) {
-		req = http.request(options, onResponse);
-	} else {
-		req = https.request(options, onResponse);
+	let optObj = {};
+	optObj.host = opts.host;
+	optObj.port = opts.port;
+	optObj.method = opts.method;
+	optObj.path = path;
 
+	if(!opts.useHttps) {
+		req = http.request(optObj, onResponse);
+	} else {
+		req = https.request(optObj, onResponse);
 	}
-	if(data !== null)
-	{
+	if(opts.method.toUpperCase() === "POST" && dataBuff !== null) {
 		req.write(dataBuff);
 	}
 	req.on('error', function(e) {
-		if(func)
-		{
-			func(new Error("Error when connect " + url + ": " + e.message), null);
+		if(func) {
+			func(new Error("Error when connect " + path + ": " + e.message), null);
 			return;
 		}
-		});
+	});
 	req.end();
 
 	function onResponse(res)
 	{
-		if(res.statusCode !== 200)
-		{
-			if(func)
-			{
-				func(new Error("Error when connect " + url + ", return code: " + res.statusCode), null);
+		if(res.statusCode !== 200) {
+			if(func) {
+				func(new Error("Error when connect " + path + ", return code: " + res.statusCode), null);
 				return;
 			}
 		}
 		var chunkArray = [];
 		res.on('data', function (chunk) {
 			chunkArray.push(chunk);
-			});
+		});
 		res.on('end', function () {
 			var buff = Buffer.concat(chunkArray);
-			if(func)
-			{
+			if(func) {
 				func(null, buff);
 				return;
 			}
-			});
+		});
 	}
 }
 
@@ -210,7 +207,6 @@ function wrap(response, func)
 }
 
 exports.response = response;
-exports.responseStr = responseStr;
 exports.httpRequest = httpRequest;
 exports.auth = auth;
 exports.wrap = wrap;

@@ -192,6 +192,28 @@ function clone(oldObj)
 	}
 }
 
+function expendObj(obj1, obj2)
+{
+	if(!obj1) {
+		obj1 = {};
+	}
+	for(let k in obj2)
+	{
+		if(typeof(obj2[k]) === "number" ||
+			typeof(obj2[k]) === "string" ||
+			typeof(obj2[k]) === "boolean"
+		){
+			obj1[k] = obj2[k];
+		} else if(typeof(obj2[k]) === "object") {
+			obj1[k] = expendObj(obj1[k], obj2[k]);
+		} else {//function or undefined
+			continue;
+		}
+		
+	}
+	return obj1;
+}
+
 function copyProperty(sourceObj, targetObj)
 {
 	for(var k in sourceObj)
@@ -309,6 +331,7 @@ exports.getCharId = getCharId;
 //in: num to check.
 //ret: true or false.
 exports.isInt = isInt;
+exports.expendObj = expendObj;
 
 
 

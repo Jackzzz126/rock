@@ -18,11 +18,11 @@ function httpRequest(opts, data, func)
 
 	var dataBuff = null;
 	if(typeof data === "string") {
-		dataBuff = new Buffer(data, "utf8");
+		dataBuff = Buffer.from(data, "utf8");
 	} else if(Buffer.isBuffer(data)){
 		dataBuff = data;
 	} else {
-		dataBuff = new Buffer(JSON.stringify(data), "utf8");
+		dataBuff = Buffer.from(JSON.stringify(data), "utf8");
 	}
 
 	if(data !== null) {

@@ -5,12 +5,12 @@ function md5(str) {
 }
 
 function toBase64(str) {
-	let buff = new Buffer(str);
+	let buff = Buffer.from(str);
 	return buff.toString('base64');
 }
 
 function frombase64(base64Str) {
-	let buff = new Buffer(base64Str, 'base64');
+	let buff = Buffer.from(base64Str, 'base64');
 	return buff.toString();
 }
 

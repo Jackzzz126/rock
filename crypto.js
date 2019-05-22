@@ -1,7 +1,7 @@
 var crypto = require("crypto");
 
 function md5(str) {
-	return crypto.createHash('md5').update(str).digest("hex");
+	return crypto.createHash('md5').update(str).digest("hex").toLowerCase();
 }
 
 function toBase64(str) {

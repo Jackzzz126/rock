@@ -1,4 +1,6 @@
 exports.comm = require('./comm');
+exports.array = require('./array');
+exports.draw = require('./draw');
 exports.time = require('./time');
 exports.crypto = require('./crypto');
 

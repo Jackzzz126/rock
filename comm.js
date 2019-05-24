@@ -13,54 +13,6 @@ function randNum(maxNum)//return range:[0, maxNum -1 ]
 	return Math.floor(Math.random() * maxNum);
 }
 
-function drawMultiFromAll(probs, count)
-{
-	var indexes = [];
-	for(var i in probs)
-	{
-		indexes.push(i);
-	}
-
-	var drawnIndexes = [];
-	while(drawnIndexes.length !== count)
-	{
-		var index = drawOneFromAll(probs);
-		//save index
-		drawnIndexes.push(parseInt(indexes[index]));
-		//remove
-		probs.splice(index, 1);
-		indexes.splice(index, 1);
-		if(probs.length < 1)
-		{
-			break;
-		}
-	}
-
-	return drawnIndexes;
-}
-
-function drawOneFromAll(probs)
-{
-	var allProbs = 0;
-	for(var i in probs)
-	{
-		allProbs += probs[i];
-	}
-
-	var randNum = randNum(allProbs);
-
-	var probSum = 0;
-	for(i in probs)
-	{
-		probSum += probs[i];
-		if(randNum < probSum)
-		{
-			return parseInt(i);
-		}
-	}
-	throw new Error("error in draw by probs: " + JSON.stringify(probs));
-}
-
 function strByteLength(str)
 {
 	var len = 0;
@@ -78,21 +30,6 @@ function strByteLength(str)
 		}
 	}
 	return len;
-}
-
-function hasDupliData(array)
-{
-	for(var i in array)
-	{
-		for(var j = i + 1; j < array.length; j++)
-		{
-			if(array[i] === array[j])
-			{
-				return true;
-			}
-		}
-	}
-	return false;
 }
 
 function expendObj(obj1, obj2)
@@ -125,25 +62,10 @@ exports.randStr = randStr;
 //in: range max
 //ret: random num , >=0 and < max
 exports.randNum = randNum;
-//des: draw an random obj by given probilities.
-//in: array of probilities.
-//ret: index drawn.
-exports.drawOneFromAll = drawOneFromAll;
-//des: draw multi random no-repeat obj by given probilities.
-//in: array of probilities.
-//ret: indexes drawn.
-exports.drawMultiFromAll = drawMultiFromAll;
-
 //des: get byte length of str.
 //in: str.
 //ret: byte length of the given str.
 exports.strByteLength = strByteLength;
 
-//des: check if array has duplicate elements.
-//in: array.
-//ret: true or false.
-exports.hasDupliData = hasDupliData;
 exports.expendObj = expendObj;
-
-
 

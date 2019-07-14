@@ -49,7 +49,8 @@ function httpRequest(opts, data, func)
 	} else {
 		req = https.request(optObj, onResponse);
 	}
-	if(opts.method.toUpperCase() === "POST" && dataBuff !== null) {
+	if((opts.method.toUpperCase() === "POST" || opts.method.toUpperCase() === "PUT") &&
+		dataBuff !== null) {
 		req.write(dataBuff);
 	}
 	req.on('error', function(e) {

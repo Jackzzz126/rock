@@ -54,6 +54,21 @@ function expendObj(obj1, obj2)
 	return obj1;
 }
 
+function byteNum2Human(byteNum) {
+	let humanStr = "";
+	if(byteNum < 1024 * 1024) {// < 1M
+		humanStr = (byteNum / 1024).toFixed(2) + "K";
+	} else if (byteNum < 1024 * 1024 * 1024) {//< 1G
+		humanStr = (byteNum / (1024 * 1024)).toFixed(2) + "M";
+	} else if (byteNum < 1024 * 1024 * 1024 * 1024) {//< 1T
+		humanStr = (byteNum / (1024 * 1024 * 1024)).toFixed(2) + "G";
+	} else {
+		humanStr = (byteNum / (1024 * 1024 * 1024 * 1024)).toFixed(2) + "T";
+	}
+
+	return humanStr;
+}
+
 //des: create a random str.
 //in: str length
 //ret: random str with given length
@@ -68,4 +83,6 @@ exports.randNum = randNum;
 exports.strByteLength = strByteLength;
 
 exports.expendObj = expendObj;
+
+exports.byteNum2Human = byteNum2Human;
 

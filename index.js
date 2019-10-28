@@ -4,7 +4,7 @@ exports.draw = require('./draw');
 exports.time = require('./time');
 exports.crypto = require('./crypto');
 
-exports.wsServer = require('./wsServer');
+//exports.wsServer = require('./wsServer');
 
 exports.httpServer = require('./httpServer');
 exports.httpUtil = require('./httpUtil');
